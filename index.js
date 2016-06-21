@@ -36,10 +36,7 @@ router.post('/posts', function *(next) {
 
 router.put('/posts/:id', function *(next) {
 	var query = {'_id': this.params.id};
-	Post.findOneAndUpdate(query, this.request.body, function(err, doc){
-    if (err) console.log("err");
-    console.log("succesfully saved");
-});
+	Post.findOneAndUpdate(query, this.request.body).exec();
 });
 
 router.delete('/posts/:id', function *(next) {
