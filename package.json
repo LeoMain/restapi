@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/LeoMain/restapi/issues"
   },
-  "homepage": "https://github.com/LeoMain/restapi#readme"
+  "homepage": "https://github.com/LeoMain/restapi#readme",
+  "dependencies": {
+    "koa": "^1.2.0",
+    "koa-router": "^5.4.0"
+  }
 }
