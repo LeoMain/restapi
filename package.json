@@ -21,5 +21,11 @@
     "koa-bodyparser": "^2.2.0",
     "koa-router": "^5.4.0",
     "mongoose": "^4.5.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0"
   }
 }

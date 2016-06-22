@@ -8,7 +8,7 @@ var postSchema = mongoose.Schema({
 	},
 	name: {
 		type: String,
-		minlength: 10,
+		minlength: 5,
 		required: true
 	},
 	text: {

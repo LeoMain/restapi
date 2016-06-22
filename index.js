@@ -1,4 +1,4 @@
-var app = require('koa')();
+var app = module.exports = require('koa')();
 var router = require('./routes');
 var bodyParser = require('koa-bodyparser');
 var mongoose = require('mongoose');
@@ -9,4 +9,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 app.use(bodyParser());
 app.use(router.routes());
-app.listen(3000);
+
+if (!module.parent) {
+	app.listen(3000);
+}

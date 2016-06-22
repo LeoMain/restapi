@@ -23,6 +23,7 @@ ctrl.add = function *(next) {
 	try {
 		var post = new Post(this.request.body);
 		yield post.save();
+		this.body = post;
 	}
 	catch (e) {
 		this.body = e.message;
@@ -32,7 +33,7 @@ ctrl.add = function *(next) {
 ctrl.edit = function *(next) {
 	try {
 		var query = {'_id': this.params.id};
-		Post.findOneAndUpdate(query, this.request.body).exec();
+		this.body = yield Post.findOneAndUpdate(query, this.request.body, {new: true}).exec();
 	}
 	catch (e) {
 		this.body = e.message;
@@ -41,7 +42,7 @@ ctrl.edit = function *(next) {
 
 ctrl.delete = function *(next) {
 	try {
-		Post.findOne({ _id: this.params.id }).remove().exec();
+		this.body = yield Post.findOne({ _id: this.params.id }).remove().exec();
 	}
 	catch (e) {
 		this.body = e.message;
