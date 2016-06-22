@@ -2,13 +2,21 @@ var ctrl = {};
 var Post = require('../models/post');
 
 ctrl.getAll = function *(next) {
-	var posts = yield Post.find().exec();
-	this.body = posts;
+	try {
+		this.body = yield Post.find().exec();
+	}
+	catch (e) {
+		this.body = e.message;
+	}
 };
 
 ctrl.get = function *(next) {
-	var post = yield Post.findOne(this.params.id).exec();
-	this.body = post;
+	try {
+		this.body = yield Post.findOne({ _id: this.params.id }).exec();
+	}
+	catch (e) {
+		this.body = e.message;
+	}
 };
 
 ctrl.add = function *(next) {
@@ -17,17 +25,27 @@ ctrl.add = function *(next) {
 		yield post.save();
 	}
 	catch (e) {
-		console.error(e);
+		this.body = e.message;
 	}
 };
 
 ctrl.edit = function *(next) {
-	var query = {'_id': this.params.id};
-	Post.findOneAndUpdate(query, this.request.body).exec();
+	try {
+		var query = {'_id': this.params.id};
+		Post.findOneAndUpdate(query, this.request.body).exec();
+	}
+	catch (e) {
+		this.body = e.message;
+	}
 };
 
 ctrl.delete = function *(next) {
-	Post.findOne({ _id: this.params.id }).remove().exec();
+	try {
+		Post.findOne({ _id: this.params.id }).remove().exec();
+	}
+	catch (e) {
+		this.body = e.message;
+	}
 };
 
 module.exports = ctrl;
