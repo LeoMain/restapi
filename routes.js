@@ -1,10 +1,7 @@
 var router = require('koa-router')();
-var post = require('./controllers/postcontroller');
+var auth = require('./controllers/auth');
 
-router.get('/posts', post.getAll);
-router.get('/posts/:id', post.get);
-router.post('/posts', post.add);
-router.put('/posts/:id', post.edit);
-router.delete('/posts/:id', post.delete);
+router.post('/signin', auth.auth);
+router.post('/signup', auth.register);
 
 module.exports = router;
