@@ -1,5 +1,5 @@
 var router = require('koa-router')();
-var post = require('./controllers/postcontroller');
+var post = require('./controllers/post');
 
 router.get('/api/posts', post.getAll);
 router.get('/api/posts/:id', post.get);
