@@ -1,4 +1,4 @@
-var app = module.exports = require('koa')();
+var app = require('koa')();
 var router = require('./routes');
 var routerprotected = require('./routesprotected');
 var config = require('./config');
@@ -18,3 +18,5 @@ app.use(routerprotected.routes());
 if (!module.parent) {
 	app.listen(3000);
 }
+
+module.exports = app;
