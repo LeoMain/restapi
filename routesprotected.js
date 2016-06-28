@@ -1,10 +1,11 @@
-var router = require('koa-router')();
 var post = require('./controllers/post');
+var rbac = require('koa-rbac');
 
-router.get('/api/posts', post.getAll);
-router.get('/api/posts/:id', post.get);
-router.post('/api/posts', post.add);
-router.put('/api/posts/:id', post.edit);
-router.delete('/api/posts/:id', post.delete);
-
-module.exports = router;
+module.exports.register = function (router) {
+	router.use(function*(next){ console.log(this.state.user); yield next; });
+	router.get('/api/posts', rbac.allow(['read']), post.getAll);
+	router.get('/api/posts/:id', rbac.allow(['read']), post.get);
+	router.post('/api/posts', rbac.allow(['create']), post.add);
+	router.put('/api/posts/:id', rbac.allow(['update']), post.edit);
+	router.delete('/api/posts/:id', rbac.allow(['delete']), post.delete);
+};

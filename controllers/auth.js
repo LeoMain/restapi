@@ -30,4 +30,13 @@ ctrl.auth = function *(next) {
 	}
 };
 
+ctrl.showUsers = function *(next) {
+	try {
+		this.body = yield User.find({}, {password: 0, __v: 0, _id: 0}).exec();
+	}
+	catch (e) {
+		this.body = e.message;
+	}
+};
+
 module.exports = ctrl;
