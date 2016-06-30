@@ -1,7 +1,32 @@
+var router = require('koa-router')();
+var rbac = require('koa-rbac');
 var auth = require('./controllers/auth');
+var post = require('./controllers/post');
+var config = require('./config');
+var jwt = require('koa-jwt');
+var rbac = require('koa-rbac');
+var rules = require('./rbac-rules');
+var customProvider = require('./rbac-provider');
+const rbacOptions = {
+	rbac: new rbac.RBAC({
+		provider: new customProvider(rules)
+	}),
+	identity: function (ctx) { 
+		return ctx && ctx.state.user;
+	}
+}; 
 
-module.exports.register = function (router) {
-	router.post('/signin', auth.auth);
-	router.post('/signup', auth.register);
-	router.get('/users', auth.showUsers);
-};
+router.use('/api/', jwt({ secret: config.secret }));
+router.use(rbac(rbacOptions));
+
+router.post('/signin', auth.auth);
+router.post('/signup', auth.register);
+router.get('/users', auth.showUsers);
+
+router.get('/api/posts', rbac.allow(['read']), post.getAll);
+router.get('/api/posts/:id', rbac.allow(['read']), post.get);
+router.post('/api/posts', rbac.allow(['create']), post.add);
+router.put('/api/posts/:id', rbac.allow(['update']), post.edit);
+router.delete('/api/posts/:id', rbac.allow(['delete']), post.delete);
+
+module.exports = router;
