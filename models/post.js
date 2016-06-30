@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 
 var postSchema = mongoose.Schema({
 	author: {
-		type: mongoose.Schema.ObjectId,
-		ref : "User",
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
 		required: true
 	},
 	name: {
