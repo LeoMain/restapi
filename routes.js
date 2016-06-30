@@ -27,6 +27,7 @@ router.get('/api/posts', rbac.allow(['read']), post.getAll);
 router.get('/api/posts/:id', rbac.allow(['read']), post.get);
 router.post('/api/posts', rbac.allow(['create']), post.add);
 router.put('/api/posts/:id', rbac.allow(['update']), post.edit);
+router.put('/api/posts/:id/like', rbac.allow(['read']), post.like);
 router.delete('/api/posts/:id', rbac.allow(['delete']), post.delete);
 
 module.exports = router;

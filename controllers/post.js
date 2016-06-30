@@ -40,6 +40,26 @@ ctrl.edit = function *(next) {
 	}
 };
 
+ctrl.like = function *(next) {
+	try {
+		var user = this.state.user._doc;
+		var post = yield Post.findOne({ _id: this.params.id }).exec();
+		var index = post.likes.indexOf(user._id);
+
+		if (index != -1) {
+			post.likes.splice(index, 1);
+		} else {
+			post.likes.push(user._id);
+		}
+		
+		yield post.save();
+		this.body = post;
+	}
+	catch (e) {
+		this.body = e.message;
+	}
+};
+
 ctrl.delete = function *(next) {
 	try {
 		this.body = yield Post.findOne({ _id: this.params.id }).remove().exec();
