@@ -3,7 +3,8 @@ module.exports = {
 		'guest': {
 		},
 		'user': {
-			permissions: ['read', 'create', 'update', 'delete'],
+			permissions: ['read', 'create', 'update', 'delete','readComment', 
+				'createComment', 'deleteComment'],
 			inherited  : ['guest']
 		},
 		'test': {
