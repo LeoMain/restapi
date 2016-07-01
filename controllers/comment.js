@@ -18,7 +18,7 @@ ctrl.add = function *(next){
 ctrl.delete = function *(next) {
 	try {
 		var user = this.state.user._doc;
-		if (this.request.body.author == user._id) {
+		if (this.request.body.author = user._id) {
 		this.body = yield Comment.findOne({ _id: this.params.com }).remove().exec();
 	}
 	else {this.body = "No delete Comment"};
