@@ -17,6 +17,7 @@ var postSchema = mongoose.Schema({
 		maxlength: 1000,
 		required: true
 	},
+	likes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
 	allow: Boolean
 });
 
