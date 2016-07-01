@@ -3,6 +3,7 @@ var Post = require('../models/post');
 
 ctrl.getAll = function *(next) {
 	try {
+
 		this.body = yield Post.find().exec();
 	}
 	catch (e) {
@@ -21,6 +22,8 @@ ctrl.get = function *(next) {
 
 ctrl.add = function *(next) {
 	try {
+		var user = this.state.user._doc;
+		this.request.body.author = user._id.
 		var post = new Post(this.request.body);
 		yield post.save();
 		this.body = post;
@@ -32,6 +35,11 @@ ctrl.add = function *(next) {
 
 ctrl.edit = function *(next) {
 	try {
+		var user = this.state.user._doc;
+		var post = yield Post.findOne({ _id: this.params.id }).exec();
+		if (post.author != user._id) {
+			throw new Error("Forbidden. This is not your post");
+		}
 		var query = {'_id': this.params.id};
 		this.body = yield Post.findOneAndUpdate(query, this.request.body, {new: true}).exec();
 	}
@@ -62,6 +70,11 @@ ctrl.like = function *(next) {
 
 ctrl.delete = function *(next) {
 	try {
+		var user = this.state.user._doc;
+		var post = yield Post.findOne({ _id: this.params.id }).exec();
+		if (post.author != user._id) {
+			throw new Error("Forbidden. This is not your post");
+		}
 		this.body = yield Post.findOne({ _id: this.params.id }).remove().exec();
 	}
 	catch (e) {
