@@ -111,6 +111,7 @@ describe('Comments', function() {
 		res.body.should.be.a('object');
 		res.body.n.should.equal(1);
 		done();
+
 	});
 
 	it('delete comment UNAUTHORIZED on /api/posts/:id/comment/:com DELETE', function* (done) {

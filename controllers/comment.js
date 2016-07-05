@@ -18,10 +18,11 @@ ctrl.add = function *(next){
 ctrl.delete = function *(next) {
 	try {
 		var user = this.state.user._doc;
-		if (this.request.body.author = user._id) {
+		var comment = yield Comment.findOne({_id : this.params.com}).exec();
+		if (comment.author != user._id) {
+			throw new Error("Forbidden. This is not your comment");
+		}
 		this.body = yield Comment.findOne({ _id: this.params.com }).remove().exec();
-	}
-	else {this.body = "No delete Comment"};
 	}
 	catch (e) {
 		this.body = e.message;
