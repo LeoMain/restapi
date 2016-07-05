@@ -23,7 +23,7 @@ ctrl.get = function *(next) {
 ctrl.add = function *(next) {
 	try {
 		var user = this.state.user._doc;
-		this.request.body.author = user._id.
+		this.request.body.author = user._id;
 		var post = new Post(this.request.body);
 		yield post.save();
 		this.body = post;
